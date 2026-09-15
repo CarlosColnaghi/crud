@@ -14,8 +14,8 @@ func menu() -> Int? {
     return nil
 }
 
-func addPerson() -> (String, String, String, String) {
-    let person: (name: String, email: String, telefone: String, idade: String)
+func addPerson() -> (name: String, email: String, telefone: String, idade: String) {
+    var person: (name: String, email: String, telefone: String, idade: String) = ("", "", "", "")
     print("Digite o nome da pessoa que deseja alterar:")
     if let name = readLine() {
         person.name = name
@@ -26,24 +26,31 @@ func addPerson() -> (String, String, String, String) {
     }
     print("Digite o telefone da pessoa:")
     if let telefone = readLine() {
-        person.telefone = readLine()
+        person.telefone = telefone
     }
     print("Digite a idade da pessoa:")
-    if let idade = readLine() {
-        
-    person.idade = readLine()
+    if let idade = readLine() {      
+        person.idade = idade
     }
     return person
 }
 
-let people: [String: Array<String>] = [:]
+
+var people: [String: Array<String>] = [:]
 
 while let option = menu(), option != 6 {
     switch option {
     case 1:
-       addPerson() 
+       let person: (name: String, email: String, telefone: String, idade: String) = addPerson()
+       if !people.keys.contains(person.name) {
+            people[person.name] = [person.email, person.telefone, person.idade]
+            print("Pessoa adicionada com sucesso!")
+       }
+    case 2:
+       let person: (name: String, email: String, telefone: String, idade: String) = addPerson()
+        break 
     default:
        break 
     }
-    
+    print(people)    
 }
