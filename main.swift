@@ -14,43 +14,94 @@ func menu() -> Int? {
     return nil
 }
 
-func addPerson() -> (name: String, email: String, telefone: String, idade: String) {
-    var person: (name: String, email: String, telefone: String, idade: String) = ("", "", "", "")
-    print("Digite o nome da pessoa que deseja alterar:")
+func add() -> Void {
+    print("Digite o nome da pessoa que deseja adicionar:")
     if let name = readLine() {
-        person.name = name
+        if people[name] != nil {
+            print("Já existe uma pessoa com esse nome.")
+        } else {
+            people[name] = addInfo()
+            print("Pessoa adicionada com sucesso!")
+        }
     }
-    print("Digite o email da pessoa:")
-    if let email = readLine() {
-        person.email = email 
-    }
-    print("Digite o telefone da pessoa:")
-    if let telefone = readLine() {
-        person.telefone = telefone
-    }
-    print("Digite a idade da pessoa:")
-    if let idade = readLine() {      
-        person.idade = idade
-    }
-    return person
 }
 
+func addInfo() -> [String] {
+    print("Digite o email da pessoa:")
+    let email = readLine() ?? ""
+    print("Digite o telefone da pessoa:")
+    let telefone = readLine() ?? ""
+    print("Digite a idade da pessoa:")
+    let idade = readLine() ?? ""
+    return [email, telefone, idade]
+}
+
+func update() -> Void {
+    print("Digite o nome da pessoa que deseja alterar:")
+    if let name = readLine() {
+        if people[name] == nil {
+            print("Pessoa não encontrada.")
+        } else {
+            people[name] = addInfo()
+            print("Pessoa alterada com sucesso!")
+        }
+    }
+}
+
+func delete() -> Void {
+    print("Digite o nome da pessoa que deseja apagar:")
+    if let name = readLine() {
+        if people[name] == nil {
+            print("Pessoa não encontrada.")
+        } else {
+            people.removeValue(forKey: name)
+            print("Pessoa removida com sucesso!")
+        }
+    }
+}
+
+func display(_ name: String, _ info: [String]) -> Void {
+    print("Nome: \(name)")
+    print("Email: \(info[0])")
+    print("Telefone: \(info[1])")
+    print("Idade: \(info[2])")
+    print()
+}
+
+func showAll() -> Void {
+    print("Dados de todas as pessoas cadastradas:")
+    for (name, info) in people {
+        display(name, info)
+    }
+}
+
+func show() -> Void {
+    print("Digite o nome da pessoa que deseja exibir:")
+    if let name = readLine(), let info = people[name] {
+        display(name, info)
+    } else {
+        print("Pessoa não encontrada.")
+    }
+}
 
 var people: [String: Array<String>] = [:]
 
 while let option = menu(), option != 6 {
     switch option {
     case 1:
-       let person: (name: String, email: String, telefone: String, idade: String) = addPerson()
-       if !people.keys.contains(person.name) {
-            people[person.name] = [person.email, person.telefone, person.idade]
-            print("Pessoa adicionada com sucesso!")
-       }
+        add()   
     case 2:
-       let person: (name: String, email: String, telefone: String, idade: String) = addPerson()
-        break 
+        update()
+    case 3:
+        delete()
+    case 4:
+        show()
+    case 5:
+        showAll()
     default:
        break 
     }
-    print(people)    
+    print(people)
+    print()
 }
+print("Programa finalizado.")
