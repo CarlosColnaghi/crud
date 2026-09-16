@@ -8,14 +8,14 @@ func menu() -> Int? {
     5. Exibir dados de todas as pessoas
     6. Finalizar o programa
     """)
-    if let input = readLine(), let option = Int(input), option >= 1 && option <= 6 {
-        return option
+    if let input = readLine() {
+        return Int(input) ?? 0
     }
     return nil
 }
 
-func add() -> Void {
-    print("Digite o nome da pessoa que deseja adicionar:")
+func add() {
+    print("Digite o nome da pessoa:")
     if let name = readLine() {
         if people[name] != nil {
             print("Já existe uma pessoa com esse nome.")
@@ -36,19 +36,19 @@ func addInfo() -> [String] {
     return [email, telefone, idade]
 }
 
-func update() -> Void {
+func update() {
     print("Digite o nome da pessoa que deseja alterar:")
     if let name = readLine() {
         if people[name] == nil {
             print("Pessoa não encontrada.")
         } else {
             people[name] = addInfo()
-            print("Pessoa alterada com sucesso!")
+            print("Dados da pessoa alterados com sucesso!")
         }
     }
 }
 
-func delete() -> Void {
+func delete() {
     print("Digite o nome da pessoa que deseja apagar:")
     if let name = readLine() {
         if people[name] == nil {
@@ -60,7 +60,7 @@ func delete() -> Void {
     }
 }
 
-func display(_ name: String, _ info: [String]) -> Void {
+func display(_ name: String, _ info: [String]) {
     print("Nome: \(name)")
     print("Email: \(info[0])")
     print("Telefone: \(info[1])")
@@ -68,14 +68,14 @@ func display(_ name: String, _ info: [String]) -> Void {
     print()
 }
 
-func showAll() -> Void {
+func showAll() {
     print("Dados de todas as pessoas cadastradas:")
     for (name, info) in people {
         display(name, info)
     }
 }
 
-func show() -> Void {
+func show() {
     print("Digite o nome da pessoa que deseja exibir:")
     if let name = readLine(), let info = people[name] {
         display(name, info)
@@ -88,18 +88,18 @@ var people: [String: Array<String>] = [:]
 
 while let option = menu(), option != 6 {
     switch option {
-    case 1:
-        add()   
-    case 2:
-        update()
-    case 3:
-        delete()
-    case 4:
-        show()
-    case 5:
-        showAll()
-    default:
-       break 
+        case 1:
+            add()   
+        case 2:
+            update()
+        case 3:
+            delete()
+        case 4:
+            show()
+        case 5:
+            showAll()
+        default:
+           break 
     }
     print(people)
     print()
