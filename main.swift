@@ -14,19 +14,19 @@ func menu() -> Int? {
     return nil
 }
 
-func add() {
+func addPerson() {
     print("Digite o nome da pessoa:")
     if let name = readLine() {
         if people[name] != nil {
             print("Já existe uma pessoa com esse nome.")
         } else {
-            people[name] = addInfo()
+            people[name] = readPersonData()
             print("Pessoa adicionada com sucesso!")
         }
     }
 }
 
-func addInfo(_ isNew: Bool = false) -> [String] {
+func readPersonData(_ isNew: Bool = false) -> [String] {
     print("Digite o \(isNew ? "novo email" : "email") da pessoa:")
     let email = readLine() ?? ""
     print("Digite o \(isNew ? "novo telefone" : "telefone") da pessoa:")
@@ -36,19 +36,19 @@ func addInfo(_ isNew: Bool = false) -> [String] {
     return [email, telefone, idade]
 }
 
-func update() {
+func updatePerson() {
     print("Digite o nome da pessoa que deseja alterar:")
     if let name = readLine() {
         if people[name] == nil {
             print("Pessoa não encontrada.")
         } else {
-            people[name] = addInfo(true)
+            people[name] = readPersonData(true)
             print("Dados da pessoa alterados com sucesso!")
         }
     }
 }
 
-func delete() {
+func deletePerson() {
     print("Digite o nome da pessoa que deseja apagar:")
     if let name = readLine() {
         if people[name] == nil {
@@ -60,26 +60,26 @@ func delete() {
     }
 }
 
-func display(_ name: String, _ info: [String]) {
-    print("Nome: \(name)")
-    print("Email: \(info[0])")
-    print("Telefone: \(info[1])")
-    print("Idade: \(info[2])")
+func printPersonData(_ data: [String]) {
+    print("Email: \(data[0])")
+    print("Telefone: \(data[1])")
+    print("Idade: \(data[2])")
     print()
 }
 
-func showAll() {
+func listAllPeople() {
     print("Dados de todas as pessoas cadastradas:")
-    for (name, info) in people {
-        display(name, info)
+    for (name, data) in people {
+       print("Nome: \(name)")
+       printPersonData(data)
     }
 }
 
-func show() {
+func findPerson() {
     print("Digite o nome da pessoa que deseja exibir:")
-    if let name = readLine(), let info = people[name] {
+    if let name = readLine(), let data = people[name] {
         print("Dados de \(name):")
-        display(name, info)
+        printPersonData(data)
     } else {
         print("Pessoa não encontrada.")
     }
@@ -90,15 +90,15 @@ var people: [String: Array<String>] = [:]
 while let option = menu(), option != 6 {
     switch option {
         case 1:
-            add()   
+            addPerson()   
         case 2:
-            update()
+            updatePerson()
         case 3:
-            delete()
+            deletePerson()
         case 4:
-            show()
+            findPerson()
         case 5:
-            showAll()
+            listAllPeople()
         default:
            break 
     }
