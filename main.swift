@@ -78,6 +78,7 @@ func showAll() {
 func show() {
     print("Digite o nome da pessoa que deseja exibir:")
     if let name = readLine(), let info = people[name] {
+        print("Dados de \(name):")
         display(name, info)
     } else {
         print("Pessoa não encontrada.")
