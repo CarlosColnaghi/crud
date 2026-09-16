@@ -26,12 +26,12 @@ func add() {
     }
 }
 
-func addInfo() -> [String] {
-    print("Digite o email da pessoa:")
+func addInfo(_ isNew: Bool = false) -> [String] {
+    print("Digite o \(isNew ? "novo email" : "email") da pessoa:")
     let email = readLine() ?? ""
-    print("Digite o telefone da pessoa:")
+    print("Digite o \(isNew ? "novo telefone" : "telefone") da pessoa:")
     let telefone = readLine() ?? ""
-    print("Digite a idade da pessoa:")
+    print("Digite a \(isNew ? "nova idade" : "idade") da pessoa:")
     let idade = readLine() ?? ""
     return [email, telefone, idade]
 }
@@ -42,7 +42,7 @@ func update() {
         if people[name] == nil {
             print("Pessoa não encontrada.")
         } else {
-            people[name] = addInfo()
+            people[name] = addInfo(true)
             print("Dados da pessoa alterados com sucesso!")
         }
     }
